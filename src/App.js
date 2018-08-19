@@ -32,6 +32,10 @@ class App extends Component {
 
   backend = new Backend();
 
+  handleCancel = () => {
+    this.setState({ submitError: null });
+  };
+
   handleOperation = params => {
     this.setState({
       submitting: true,
@@ -73,7 +77,7 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { loading, error, date, currencies, rates } = this.state;
+    const { loading, error, submitError, date, currencies, rates } = this.state;
 
     let exchangeRates;
     if (loading) {
@@ -92,7 +96,9 @@ class App extends Component {
     } else {
       transferForm = (
         <TransferForm
+          error={submitError}
           currencies={currencies}
+          onCancel={this.handleCancel}
           onSubmit={this.handleOperation}
         />
       );
